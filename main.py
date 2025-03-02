@@ -4,19 +4,12 @@ from PIL import Image, ImageOps
 import shutil
 import os
 import logging
+import preprocess
 
 logger = logging.getLogger('SupaRes')
 logger.setLevel(logging.INFO)
 
 app = FastAPI()
-
-def dummy_preprocess(image_path: str) -> str:
-    # open image, convert to greyscale and save output
-    with Image.open(image_path) as img:
-        grey_img = ImageOps.grayscale(img)
-        ouptut_path = os.path.splitext(image_path)[0] + "_grey.png"
-        grey_img.save(ouptut_path)
-    return ouptut_path
 
 @app.post("/")
 async def upload(file: UploadFile = File(...)):
@@ -27,7 +20,7 @@ async def upload(file: UploadFile = File(...)):
         shutil.copyfileobj(file.file, buffer)
 
     # preprocess the image
-    output_path = dummy_preprocess(temp_file_path)
+    output_path = preprocess.dummy_preprocess(temp_file_path)
     logger.info(f"Processed file: {output_path}")
 
     return FileResponse(path=output_path, filename='processed.png')
