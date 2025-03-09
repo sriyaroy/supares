@@ -24,3 +24,7 @@ async def upload(file: UploadFile = File(...)):
     logger.info(f"Processed file: {output_path}")
 
     return FileResponse(path=output_path, filename='processed.png')
+
+@app.get("/")
+async def index():
+    return {"message": "Server Working"}
