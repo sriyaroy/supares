@@ -4,14 +4,16 @@ metadata:
   annotations:
     autopilot.gke.io/resource-adjustment: '{"input":{"containers":[{"name":"supares-app"}]},"output":{"containers":[{"limits":{"ephemeral-storage":"1Gi"},"requests":{"cpu":"500m","ephemeral-storage":"1Gi","memory":"2Gi"},"name":"supares-app"}]},"modified":true}'
     autopilot.gke.io/warden-version: 31.23.0-gke.9
-    deployment.kubernetes.io/revision: "1"
+    deployment.kubernetes.io/revision: "2"
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{"autopilot.gke.io/resource-adjustment":"{\"input\":{\"containers\":[{\"name\":\"supares-app\"}]},\"output\":{\"containers\":[{\"limits\":{\"ephemeral-storage\":\"1Gi\"},\"requests\":{\"cpu\":\"500m\",\"ephemeral-storage\":\"1Gi\",\"memory\":\"2Gi\"},\"name\":\"supares-app\"}]},\"modified\":true}","autopilot.gke.io/warden-version":"31.23.0-gke.9","deployment.kubernetes.io/revision":"1"},"creationTimestamp":"2025-03-11T14:55:02Z","generation":2,"labels":{"app":"supares-app"},"name":"supares-app","namespace":"default","resourceVersion":"28451","uid":"3a3fca3f-31ab-4a9e-aa03-7690e8bc2982"},"spec":{"progressDeadlineSeconds":600,"replicas":3,"revisionHistoryLimit":10,"selector":{"matchLabels":{"app":"supares-app"}},"strategy":{"rollingUpdate":{"maxSurge":"25%","maxUnavailable":"25%"},"type":"RollingUpdate"},"template":{"metadata":{"creationTimestamp":null,"labels":{"app":"supares-app"}},"spec":{"containers":[{"image":"europe-west2-docker.pkg.dev/supares-453218/supares-repo/supares-app:v2","imagePullPolicy":"IfNotPresent","name":"supares-app","resources":{"limits":{"ephemeral-storage":"1Gi"},"requests":{"cpu":"500m","ephemeral-storage":"1Gi","memory":"2Gi"}},"securityContext":{"capabilities":{"drop":["NET_RAW"]}},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File"}],"dnsPolicy":"ClusterFirst","restartPolicy":"Always","schedulerName":"default-scheduler","securityContext":{"seccompProfile":{"type":"RuntimeDefault"}},"terminationGracePeriodSeconds":30,"tolerations":[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"amd64"}]}}},"status":{"conditions":[{"lastTransitionTime":"2025-03-11T14:55:02Z","lastUpdateTime":"2025-03-11T14:55:02Z","message":"Deployment does not have minimum availability.","reason":"MinimumReplicasUnavailable","status":"False","type":"Available"},{"lastTransitionTime":"2025-03-11T15:18:42Z","lastUpdateTime":"2025-03-11T15:18:42Z","message":"ReplicaSet \"supares-app-5d75bd4d5\" is progressing.","reason":"ReplicaSetUpdated","status":"True","type":"Progressing"}],"observedGeneration":2,"replicas":3,"unavailableReplicas":3,"updatedReplicas":3}}
   creationTimestamp: "2025-03-11T14:55:02Z"
-  generation: 2
+  generation: 3
   labels:
     app: supares-app
   name: supares-app
   namespace: default
-  resourceVersion: "28451"
+  resourceVersion: "44243"
   uid: 3a3fca3f-31ab-4a9e-aa03-7690e8bc2982
 spec:
   progressDeadlineSeconds: 600
@@ -38,10 +40,12 @@ spec:
         resources:
           limits:
             ephemeral-storage: 1Gi
-          requests:
+            memory: 512Mi
             cpu: 500m
+          requests:
+            cpu: 100m
             ephemeral-storage: 1Gi
-            memory: 2Gi
+            memory: 256Mi
         securityContext:
           capabilities:
             drop:
@@ -68,13 +72,13 @@ status:
     reason: MinimumReplicasUnavailable
     status: "False"
     type: Available
-  - lastTransitionTime: "2025-03-11T15:18:42Z"
-    lastUpdateTime: "2025-03-11T15:18:42Z"
-    message: ReplicaSet "supares-app-5d75bd4d5" is progressing.
-    reason: ReplicaSetUpdated
-    status: "True"
+  - lastTransitionTime: "2025-03-11T15:35:36Z"
+    lastUpdateTime: "2025-03-11T15:35:36Z"
+    message: ReplicaSet "supares-app-59b55bf6bb" has timed out progressing.
+    reason: ProgressDeadlineExceeded
+    status: "False"
     type: Progressing
-  observedGeneration: 2
-  replicas: 3
-  unavailableReplicas: 3
-  updatedReplicas: 3
+  observedGeneration: 3
+  replicas: 4
+  unavailableReplicas: 4
+  updatedReplicas: 1
